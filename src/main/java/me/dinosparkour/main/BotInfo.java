@@ -28,11 +28,11 @@ public class BotInfo {
         return "98457903660269568";
     }
 
-    protected static String getEmail() {
+    static String getEmail() {
         return BotInfo.email;
     }
 
-    protected static String getPassword() {
+    static String getPassword() {
         return BotInfo.password;
     }
 
@@ -73,22 +73,22 @@ public class BotInfo {
 
         StringBuilder uptimeMsg = new StringBuilder();
         if(days != 1L)
-            uptimeMsg.append(days + " days ");
+            uptimeMsg.append(days).append(" days ");
         else
             uptimeMsg.append("1 day ");
 
         if(hours != 1L)
-            uptimeMsg.append(hours + " hours ");
+            uptimeMsg.append(hours).append(" hours ");
         else
             uptimeMsg.append("1 hour ");
 
         if(minutes != 1L)
-            uptimeMsg.append(minutes + " minutes ");
+            uptimeMsg.append(minutes).append(" minutes ");
         else
             uptimeMsg.append("1 minute ");
 
         if(seconds != 1L)
-            uptimeMsg.append(seconds + " seconds");
+            uptimeMsg.append(seconds).append(" seconds");
         else
             uptimeMsg.append("1 second");
 
