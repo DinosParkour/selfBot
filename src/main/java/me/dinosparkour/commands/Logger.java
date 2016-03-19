@@ -11,8 +11,20 @@ import java.time.format.DateTimeFormatter;
  **/
 public class Logger extends ListenerAdapter {
 
+    private static boolean enable = true;
+
+    static boolean isEnabled() {
+        return enable;
+    }
+
+    static void toggle(boolean b) {
+        enable = b;
+    }
+
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
+        if(!Logger.isEnabled()) return;
+
         String content = e.getMessage().getContent();
         String message = (content.contains("\n")) ? "\n" + content : content;
         System.out.printf("[%s] [%s#%s] %s: %s\n",

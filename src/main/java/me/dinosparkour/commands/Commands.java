@@ -70,6 +70,32 @@ public class Commands extends ListenerAdapter {
             case "shrug":
                 message.updateMessage("¯\\_(\u30c4)_/¯");
                 break;
+
+            case "logger":
+                if(input == null) {
+                    Logger.toggle(!Logger.isEnabled());
+                    message.updateMessage("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`");
+                } else {
+                    switch(input.toLowerCase()) {
+                        case "enable":
+                            input = "true";
+                        case "disable":
+                            if(!input.equals("true"))
+                                input = "false";
+                        case "true":
+                        case "false":
+                            Logger.toggle(Boolean.valueOf(input));
+                            message.updateMessage("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`");
+                            break;
+                        case "status":
+                            message.updateMessage("The logger is **" + (Logger.isEnabled() ? "enabled" : "disabled") + "**");
+                            break;
+                        default:
+                            message.updateMessage("`" + input + "` is not a valid option!");
+                            break;
+                    }
+                }
+                break;
         }
     }
 }
