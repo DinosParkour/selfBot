@@ -2,7 +2,6 @@ package me.dinosparkour.commands;
 
 import me.dinosparkour.main.BotInfo;
 import net.dv8tion.jda.JDA;
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Guild;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
@@ -51,6 +50,12 @@ public class EvalCommand extends ListenerAdapter {
 
         String input = msg.substring(msg.indexOf(' ')+1);
 
+        String inputS;
+        if(input.contains("\n"))
+            inputS = "Input: ```\n" + input + "```";
+        else
+            inputS = "Input: `" + input + "`";
+
         engine.put("e", e);
         engine.put("jda", jda);
         engine.put("channel", channel);
@@ -70,18 +75,11 @@ public class EvalCommand extends ListenerAdapter {
                                 "})();");
 
             } catch (Exception ex) {
-                channel.sendMessage("```\n" + ex.getCause().getMessage() + "```");
+                message.updateMessage(inputS + "\n\n" + "**Exception**: ```\n" + ex.getLocalizedMessage() + "```");
                 return;
             }
 
-            String inputS;
             String outputS;
-
-            if(input.contains("\n"))
-                inputS = "Input: ```\n" + input + "```";
-            else
-                inputS = "Input: `" + input + "`";
-
             if(out == null)
                 outputS = "`Task executed without errors.`";
             else if(out.toString().contains("\n"))
@@ -104,9 +102,7 @@ public class EvalCommand extends ListenerAdapter {
                     channel.sendMessage("Your task exceeds the time limit!");
 
                 } catch (ExecutionException | InterruptedException  ex) {
-                    String cause = ex.getMessage();
-                    if(cause != null && channel.checkPermission(e.getJDA().getSelfInfo(), Permission.MESSAGE_WRITE))
-                        channel.sendMessage("```" + cause + "```");
+                    ex.printStackTrace();
                 }
             }
         };
