@@ -68,7 +68,7 @@ public class Commands extends ListenerAdapter {
                 break;
 
             case "shrug":
-                message.updateMessage("¯\\_(\u30c4)_/¯");
+                message.updateMessage("\u00af\\_(\u30c4)_/\u00af");
                 break;
 
             case "logger":
