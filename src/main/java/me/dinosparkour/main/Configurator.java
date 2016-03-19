@@ -11,10 +11,10 @@ import java.nio.file.Paths;
  * @author Dinos
  * @since 19/03/2016
  **/
-public class Configurator {
+class Configurator {
     private static File config = new File("config.json");
 
-    public static JSONObject getConfig() {
+    static JSONObject getConfig() {
         if(!config.exists()) {
             try {
                 Configurator.create();
@@ -61,7 +61,7 @@ public class Configurator {
         return null;
     }
 
-    public static void write(String value, String key) throws IOException {
+    static void write(String value, String key) throws IOException {
         switch (value.toLowerCase()) {
             case "email":
                 Files.write(Paths.get(config.getPath()),
