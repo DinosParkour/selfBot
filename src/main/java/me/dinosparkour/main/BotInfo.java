@@ -16,9 +16,9 @@ public class BotInfo {
 
     private static String version = "3.19";
     private static JSONObject config = Configurator.getConfig();
-    private static String email = config.getString("email");;
-    private static String password = config.getString("password");;
-    private static String prefix = config.getString("prefix");;
+    private static String email = config.getString("email");
+    private static String password = config.getString("password");
+    private static String prefix = config.getString("prefix");
 
     public static String getVersion() {
         return BotInfo.version;
