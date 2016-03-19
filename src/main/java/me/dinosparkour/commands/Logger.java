@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
  **/
 public class Logger extends ListenerAdapter {
 
-    private static boolean enable = true;
+    private static boolean enable = false;
 
     static boolean isEnabled() {
         return enable;
