@@ -71,6 +71,10 @@ public class Commands extends ListenerAdapter {
                 message.updateMessage("\u00af\\_(\u30c4)_/\u00af");
                 break;
 
+            case "lenny":
+                message.updateMessage("( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)");
+                break;
+
             case "logger":
                 if(input == null) {
                     Logger.toggle(!Logger.isEnabled());
