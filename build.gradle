@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    compile 'net.dv8tion:JDA:1.3.0_216'
+    compile 'net.dv8tion:JDA:1.3.0_221'
 }
 
 task fatJar(type: Jar) {
