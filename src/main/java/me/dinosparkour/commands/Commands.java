@@ -46,7 +46,7 @@ public class Commands extends ListenerAdapter {
 
             case "meme":
             case "nicememe":
-                message.updateMessage("https://giphy.com/gifs/meme-meirl-315b275sfehgs");
+                message.updateMessage("http://i.giphy.com/315b275sfehgs.gif");
                 break;
 
             case "out":
