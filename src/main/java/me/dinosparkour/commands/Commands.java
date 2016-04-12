@@ -2,10 +2,12 @@ package me.dinosparkour.commands;
 
 import me.dinosparkour.main.BotInfo;
 import net.dv8tion.jda.JDA;
+import net.dv8tion.jda.MessageHistory;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * @author Dinos
@@ -32,6 +34,24 @@ public class Commands extends ListenerAdapter {
             input = msg.substring(msg.indexOf(' ')+1);
 
         switch (command.toLowerCase()) {
+            case "cleanup":
+                int amount;
+
+                if(input == null) {
+                    amount = 20;
+                } else {
+
+                    if(!NumberUtils.isNumber(input)) {
+                        message.updateMessage("`" + input + "` is not a valid cleanup amount!");
+                        return;
+                    }
+                    amount = Integer.valueOf(input) + 1;
+                }
+
+                new MessageHistory(jda, e.getChannel()).retrieve(amount).parallelStream()
+                        .filter(m -> m.getAuthor() == jda.getSelfInfo()).forEach(Message::deleteMessage);
+                break;
+
             case "game":
                 if(input == null)
                     message.updateMessage("Currently playing: `" + jda.getSelfInfo().getCurrentGame() + "`");
