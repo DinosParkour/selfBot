@@ -20,7 +20,7 @@ import java.util.concurrent.*;
  **/
 public class EvalCommand extends ListenerAdapter {
 
-    private ScriptEngine engine;
+    private final ScriptEngine engine;
 
     public EvalCommand() {
         engine = new ScriptEngineManager().getEngineByName("nashorn");
@@ -44,7 +44,7 @@ public class EvalCommand extends ListenerAdapter {
 
         String prefix = BotInfo.getPrefix();
 
-        if(!author.getId().equals(BotInfo.getAuthorId())
+        if(!author.getId().equals(BotInfo.AUTHOR_ID)
                 || !msg.startsWith(prefix + "eval")
                 || !msg.contains(" ")) return;
 

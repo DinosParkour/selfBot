@@ -24,7 +24,7 @@ public class Commands extends ListenerAdapter {
 
         String prefix = BotInfo.getPrefix();
 
-        if(!author.getId().equals(BotInfo.getAuthorId())
+        if(!author.getId().equals(BotInfo.AUTHOR_ID)
                 || !msg.startsWith(prefix)) return;
 
         String[] args = msg.split("\\s+");

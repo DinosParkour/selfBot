@@ -12,7 +12,7 @@ import java.nio.file.Paths;
  * @since 19/03/2016
  **/
 class Configurator {
-    private static File config = new File("config.json");
+    private static final File config = new File("config.json");
 
     static JSONObject getConfig() {
         if(!config.exists()) {
@@ -61,6 +61,7 @@ class Configurator {
         return null;
     }
 
+    @SuppressWarnings("SameParameterValue")
     static void write(String value, String key) throws IOException {
         switch (value.toLowerCase()) {
             case "email":
