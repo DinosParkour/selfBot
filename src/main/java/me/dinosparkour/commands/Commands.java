@@ -34,6 +34,14 @@ public class Commands extends ListenerAdapter {
             input = msg.substring(msg.indexOf(' ')+1);
 
         switch (command.toLowerCase()) {
+            case "converter":
+                message.updateMessage("https://github.com/DinosParkour/BotConverter");
+                break;
+
+            case "invite":
+                message.updateMessage("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot");
+                break;
+
             case "cleanup":
                 int amount;
 
