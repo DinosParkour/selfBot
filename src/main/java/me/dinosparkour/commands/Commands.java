@@ -35,7 +35,7 @@ public class Commands extends ListenerAdapter {
 
         switch (command.toLowerCase()) {
             case "apps":
-                message.updateMessage("https://discordapp.com/developers/applications/me"
+                message.updateMessage("<https://discordapp.com/developers/applications/me>"
                         +"\nMake sure you're logged in as yourself and not as your bot!");
                 break;
 
