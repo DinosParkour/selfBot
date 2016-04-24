@@ -53,12 +53,14 @@ public class EvalCommand extends ListenerAdapter {
         String inputS = "Input: ```\n" + input.replace("```", "\\`\\`\\`") + "```";
 
         engine.put("e", e);
+        engine.put("api", jda);
         engine.put("jda", jda);
         engine.put("channel", channel);
         engine.put("author", author);
         engine.put("message", message);
         engine.put("guild", guild);
         engine.put("input", input);
+        engine.put("mentionedUsers", message.getMentionedUsers());
 
         ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
         ScheduledFuture<?> future = service.schedule(() -> {
