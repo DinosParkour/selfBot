@@ -87,7 +87,7 @@ public class EvalCommand extends ListenerAdapter {
             else if(out.toString().contains("\n"))
                 outputS = "Output: ```\n" + out.toString().replace("`", "\\`") + "\n```";
             else
-                outputS = "Output: ` " + out.toString().replace("`", "") + " `";
+                outputS = "Output: ` " + out.toString().replace("`", "") + "";
 
             message.updateMessage(inputS + "\n\n" + outputS);
 
