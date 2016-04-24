@@ -50,11 +50,7 @@ public class EvalCommand extends ListenerAdapter {
 
         String input = msg.substring(msg.indexOf(' ')+1);
 
-        String inputS;
-        if(input.contains("\n"))
-            inputS = "Input: ```\n" + input + "```";
-        else
-            inputS = "Input: `" + input + "`";
+        String inputS = "Input: ```\n" + input.replace("```", "\\`\\`\\`") + "```";
 
         engine.put("e", e);
         engine.put("jda", jda);
@@ -84,11 +80,8 @@ public class EvalCommand extends ListenerAdapter {
                 outputS = "`Task executed without errors.`";
             else if(out.toString().length() >= 1985 )
                 outputS = "The output is longer than 2000 chars!";
-            else if(out.toString().contains("\n"))
-                outputS = "Output: ```\n" + out.toString().replace("`", "\\`") + "\n```";
             else
-                outputS = "Output: ` " + out.toString().replace("`", "") + "";
-
+                outputS = "Output: ```\n" + out.toString().replace("```", "\\`\\`\\`") + "\n```";
             message.updateMessage(inputS + "\n\n" + outputS);
 
         }, 0, TimeUnit.MILLISECONDS);
