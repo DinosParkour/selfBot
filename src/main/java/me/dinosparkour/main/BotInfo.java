@@ -15,7 +15,7 @@ public class BotInfo {
     private static final String password = config.getString("password");
     private static String prefix = config.getString("prefix");
 
-    public static final String AUTHOR_ID = "98457903660269568";
+    public static String AUTHOR_ID;
 
     static String getEmail() {
         return BotInfo.email;

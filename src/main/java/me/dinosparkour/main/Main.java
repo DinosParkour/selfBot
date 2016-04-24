@@ -44,6 +44,7 @@ public class Main extends ListenerAdapter {
     @Override
     public void onReady(ReadyEvent e) {
         e.getJDA().getAccountManager().setIdle(true);
+        BotInfo.AUTHOR_ID = e.getJDA().getSelfInfo().getId();
 
         try {
             SimpleLog.addFileLogs(out, null);
