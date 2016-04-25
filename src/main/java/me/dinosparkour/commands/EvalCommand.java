@@ -83,7 +83,13 @@ public class EvalCommand extends ListenerAdapter {
             else if(out.toString().length() >= 1985 )
                 outputS = "The output is longer than 2000 chars!";
             else
-                outputS = "Output: ```\n" + out.toString().replace("```", "\\`\\`\\`") + "\n```";
+                outputS = "Output: ```\n"
+                        + out.toString()
+                        .replace("```", "\\`\\`\\`")
+                        .replace("@everyone", "@\u180Eeveryone")
+                        .replace("@here", "@\u180Ehere")
+                        + "\n```";
+
             message.updateMessage(inputS + "\n\n" + outputS);
 
         }, 0, TimeUnit.MILLISECONDS);
