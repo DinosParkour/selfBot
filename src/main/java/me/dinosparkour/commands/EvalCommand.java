@@ -74,7 +74,7 @@ public class EvalCommand extends ListenerAdapter {
                                 "})();");
 
             } catch (Exception ex) {
-                message.updateMessage(inputS + "\n\n" + "**Exception**: ```\n" + ex.getLocalizedMessage() + "```");
+                message.updateMessage(inputS + "\n" + "**Exception**: ```\n" + ex.getLocalizedMessage() + "```");
                 return;
             }
 
@@ -91,7 +91,7 @@ public class EvalCommand extends ListenerAdapter {
                         .replace("@here", "@\u180Ehere")
                         + "\n```";
 
-            message.updateMessage(inputS + "\n\n" + outputS);
+            message.updateMessage(inputS + "\n" + outputS);
 
         }, 0, TimeUnit.MILLISECONDS);
 
