@@ -13,9 +13,8 @@ public class BotInfo {
     private static final JSONObject config = Configurator.getConfig();
     private static final String email = config.getString("email");
     private static final String password = config.getString("password");
-    private static String prefix = config.getString("prefix");
-
     public static String AUTHOR_ID;
+    private static String prefix = config.getString("prefix");
 
     static String getEmail() {
         return BotInfo.email;
@@ -32,7 +31,7 @@ public class BotInfo {
     public static void setPrefix(String s) {
 
         try {
-            Configurator.write("prefix", s);
+            Configurator.write(Configurator.ConfigKey.PREFIX, s);
 
         } catch (IOException ex) {
             ex.printStackTrace();

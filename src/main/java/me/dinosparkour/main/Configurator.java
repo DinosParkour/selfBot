@@ -7,15 +7,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-/**
- * @author Dinos
- * @since 19/03/2016
- **/
 class Configurator {
+
     private static final File config = new File("config.json");
 
     static JSONObject getConfig() {
-        if(!config.exists()) {
+        if (!config.exists()) {
             try {
                 Configurator.create();
 
@@ -50,7 +47,7 @@ class Configurator {
     private static JSONObject load() throws IOException {
         JSONObject object = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
 
-        if(object.has("email") && object.has("password") && object.has("prefix"))
+        if (object.has("email") && object.has("password") && object.has("prefix"))
             return object;
 
         Configurator.create();
@@ -61,38 +58,36 @@ class Configurator {
         return null;
     }
 
-    @SuppressWarnings("SameParameterValue")
-    static void write(String value, String key) throws IOException {
-        switch (value.toLowerCase()) {
-            case "email":
+    static void write(ConfigKey key, String value) throws IOException {
+        switch (key) {
+            case EMAIL:
                 Files.write(Paths.get(config.getPath()),
                         new JSONObject()
-                                .put("email", key)
+                                .put("email", value)
                                 .put("password", BotInfo.getPassword())
                                 .put("prefix", BotInfo.getPrefix())
                                 .toString(4).getBytes());
                 break;
 
-            case "password":
+            case PASSWORD:
                 Files.write(Paths.get(config.getPath()),
                         new JSONObject()
                                 .put("email", BotInfo.getEmail())
-                                .put("password", key)
+                                .put("password", value)
                                 .put("prefix", BotInfo.getPrefix())
                                 .toString(4).getBytes());
                 break;
 
-            case "prefix":
+            case PREFIX:
                 Files.write(Paths.get(config.getPath()),
                         new JSONObject()
                                 .put("email", BotInfo.getEmail())
                                 .put("password", BotInfo.getPassword())
-                                .put("prefix", key)
+                                .put("prefix", value)
                                 .toString(4).getBytes());
                 break;
-
-            default:
-                throw new IllegalArgumentException(value + " is not a valid value");
         }
     }
+
+    enum ConfigKey {EMAIL, PASSWORD, PREFIX}
 }
