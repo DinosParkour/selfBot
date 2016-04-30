@@ -25,10 +25,13 @@ public class Main extends ListenerAdapter {
     public static void main(String[] args) throws LoginException, IOException {
 
         File parentFolder = new File("logs");
-        if (!parentFolder.mkdir())
+        if (!parentFolder.mkdir() && !parentFolder.exists())
             System.err.println("Creating the log folder was unsuccessful!");
-        else if (!new File(parentFolder.getPath(), new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + ".log").createNewFile())
-            System.err.println("Creating the log file was unsuccessful!");
+        else {
+            out = new File(parentFolder.getPath(), new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + ".log");
+            if (!out.createNewFile() && !out.exists())
+                System.err.println("Creating the log file was unsuccessful!");
+        }
 
         new JDAClientBuilder()
                 .setEmail(BotInfo.getEmail())
