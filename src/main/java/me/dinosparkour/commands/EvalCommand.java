@@ -44,17 +44,18 @@ public class EvalCommand extends ListenerAdapter {
 
         String prefix = BotInfo.getPrefix();
 
-        if(!author.getId().equals(BotInfo.AUTHOR_ID)
+        if (!author.getId().equals(BotInfo.AUTHOR_ID)
                 || !msg.startsWith(prefix + "eval")
                 || !msg.contains(" ")) return;
 
-        String input = msg.substring(msg.indexOf(' ')+1);
+        String input = msg.substring(msg.indexOf(' ') + 1);
 
         String inputS = "Input: ```\n" + input.replace("```", "\\`\\`\\`") + "```";
 
         engine.put("e", e);
         engine.put("api", jda);
         engine.put("jda", jda);
+        engine.put("self", jda);
         engine.put("channel", channel);
         engine.put("author", author);
         engine.put("message", message);
@@ -78,14 +79,14 @@ public class EvalCommand extends ListenerAdapter {
             }
 
             String outputS;
-            if(out == null)
+            if (out == null)
                 outputS = "`Task executed without errors.`";
-            else if(out.toString().length() >= 1985 )
+            else if (out.toString().length() >= 1985)
                 outputS = "The output is longer than 2000 chars!";
             else
                 outputS = "Output: ```\n"
                         + out.toString()
-                        .replace("```", "\\`\\`\\`")
+                        .replace("`", "\\`")
                         .replace("@everyone", "@\u180Eeveryone")
                         .replace("@here", "@\u180Ehere")
                         + "\n```";
@@ -94,17 +95,17 @@ public class EvalCommand extends ListenerAdapter {
 
         }, 0, TimeUnit.MILLISECONDS);
 
-        Thread script = new Thread("eval code"){
+        Thread script = new Thread("eval code") {
             @Override
             public void run() {
                 try {
                     future.get(10, TimeUnit.SECONDS);
 
-                } catch (TimeoutException  ex) {
+                } catch (TimeoutException ex) {
                     future.cancel(true);
                     channel.sendMessage("Your task exceeds the time limit!");
 
-                } catch (ExecutionException | InterruptedException  ex) {
+                } catch (ExecutionException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
             }
