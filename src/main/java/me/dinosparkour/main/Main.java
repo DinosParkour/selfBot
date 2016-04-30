@@ -3,7 +3,7 @@ package me.dinosparkour.main;
 import me.dinosparkour.commands.Commands;
 import me.dinosparkour.commands.EvalCommand;
 import me.dinosparkour.commands.Logger;
-import net.dv8tion.jda.JDABuilder;
+import net.dv8tion.jda.client.JDAClientBuilder;
 import net.dv8tion.jda.events.ReadyEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
 import net.dv8tion.jda.utils.SimpleLog;
@@ -22,16 +22,15 @@ public class Main extends ListenerAdapter {
 
     private static File out;
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main(String[] args) throws LoginException, IOException {
 
         File parentFolder = new File("logs");
-        parentFolder.mkdir();
-        String logFile = new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + ".log";
-        out = new File(parentFolder.getPath(), logFile);
-        out.createNewFile();
+        if (!parentFolder.mkdir())
+            System.err.println("Creating the log folder was unsuccessful!");
+        else if (!new File(parentFolder.getPath(), new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + ".log").createNewFile())
+            System.err.println("Creating the log file was unsuccessful!");
 
-        new JDABuilder()
+        new JDAClientBuilder()
                 .setEmail(BotInfo.getEmail())
                 .setPassword(BotInfo.getPassword())
                 .addListener(new Commands())

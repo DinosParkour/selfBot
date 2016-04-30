@@ -8,8 +8,10 @@ repositories {
 }
 
 dependencies {
-    compile 'net.dv8tion:JDA:1.4.0_239'
+    compile 'net.dv8tion:JDA:2.0.0_254'
+    compile 'net.dv8tion:JDA-Client:0.1.0_3'
 }
 
 //noinspection GroovyUnusedAssignment
 mainClassName = 'me.dinosparkour.main.Main'
+compileJava.options.encoding = 'UTF-8'

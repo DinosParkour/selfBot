@@ -24,112 +24,109 @@ public class Commands extends ListenerAdapter {
 
         String prefix = BotInfo.getPrefix();
 
-        if(!author.getId().equals(BotInfo.AUTHOR_ID)
+        if (!author.getId().equals(BotInfo.AUTHOR_ID)
                 || !msg.startsWith(prefix)) return;
 
         String[] args = msg.split("\\s+");
         String command = args[0].substring(prefix.length());
         String input = null;
-        if(msg.contains(" "))
-            input = msg.substring(msg.indexOf(' ')+1);
+        if (msg.contains(" "))
+            input = msg.substring(msg.indexOf(' ') + 1);
 
         switch (command.toLowerCase()) {
             case "apps":
-                message.updateMessage("<https://discordapp.com/developers/applications/me>"
-                        +"\nMake sure you're logged in as yourself and not as your bot!");
-                break;
-
-            case "converter":
-                message.updateMessage("https://github.com/DinosParkour/BotConverter");
+                message.updateMessageAsync("<https://discordapp.com/developers/applications/me>"
+                        + "\nMake sure you're logged in as yourself and not as your bot!", null);
                 break;
 
             case "invite":
-                message.updateMessage("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot"
-                        + "\n\nReplace `APP_ID` in that link with your bot's app id.");
+                message.updateMessageAsync("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot"
+                        + "\n\nReplace `APP_ID` in that link with your bot's app id.", null);
                 break;
 
             case "cleanup":
                 int amount;
 
-                if(input == null) {
+                if (input == null) {
                     amount = 20;
                 } else {
 
-                    if(!NumberUtils.isNumber(input)) {
-                        message.updateMessage("`" + input + "` is not a valid cleanup amount!");
+                    if (!NumberUtils.isNumber(input)) {
+                        message.updateMessageAsync("`" + input + "` is not a valid cleanup amount!", null);
                         return;
                     }
                     amount = Integer.valueOf(input) + 1;
                 }
 
-                new MessageHistory(jda, e.getChannel()).retrieve(amount).parallelStream()
+                new MessageHistory(e.getChannel()).retrieve(amount).parallelStream()
                         .filter(m -> m.getAuthor() == jda.getSelfInfo()).forEach(Message::deleteMessage);
                 break;
 
+            case "playing":
             case "game":
-                if(input == null)
-                    message.updateMessage("Currently playing: `" + jda.getSelfInfo().getCurrentGame() + "`");
-                else if(input.equalsIgnoreCase("null")) {
+                if (input == null)
+                    message.updateMessageAsync("Currently playing: `" + jda.getSelfInfo().getCurrentGame() + "`", null);
+                else if (input.equalsIgnoreCase("null")) {
                     jda.getAccountManager().setGame("");
-                    message.updateMessage("Stopped playing.");
+                    message.updateMessageAsync("Stopped playing.", null);
                 } else {
                     jda.getAccountManager().setGame(input);
-                    message.updateMessage("Now playing: `" + jda.getSelfInfo().getCurrentGame() + "`");
+                    message.updateMessageAsync("Now playing: `" + jda.getSelfInfo().getCurrentGame() + "`", null);
                 }
                 break;
 
             case "meme":
             case "nicememe":
-                message.updateMessage("http://i.giphy.com/315b275sfehgs.gif");
+                message.updateMessageAsync("http://i.giphy.com/315b275sfehgs.gif", null);
                 break;
 
             case "out":
             case "imout":
-                message.updateMessage("http://i.imgur.com/KBNcZ.gif");
+                message.updateMessageAsync("http://i.imgur.com/KBNcZ.gif", null);
                 break;
 
             case "nope":
             case "ohgodwhy":
-                message.updateMessage("https://giphy.com/gifs/reaction-nope-oh-god-why-dqmpS64HsNvb2");
+                message.updateMessageAsync("https://giphy.com/gifs/reaction-nope-oh-god-why-dqmpS64HsNvb2", null);
                 break;
 
             case "prefix":
-                if(input != null) {
+                if (input != null) {
                     BotInfo.setPrefix(input);
-                    message.updateMessage("New Prefix `" + input + "`");
+                    message.updateMessageAsync("New Prefix `" + input + "`", null);
                 } else
-                    message.updateMessage("Current Prefix `" + prefix + "`");
+                    message.updateMessageAsync("Current Prefix `" + prefix + "`", null);
                 break;
 
             case "shrug":
-                message.updateMessage("\u00af\\_(\u30c4)_/\u00af");
+                message.updateMessageAsync("\u00af\\_(\u30c4)_/\u00af", null);
                 break;
 
             case "lenny":
-                message.updateMessage("( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)");
+                message.updateMessageAsync("( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)", null);
                 break;
 
             case "logger":
-                if(input == null) {
+                if (input == null) {
                     Logger.toggle(!Logger.isEnabled());
-                    message.updateMessage("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`");
+                    message.updateMessageAsync("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`", null);
                 } else {
-                    switch(input.toLowerCase()) {
+                    switch (input.toLowerCase()) {
                         case "enable":
                             input = "true";
                         case "disable":
-                            if(!input.equals("true"))
+                            if (!input.equals("true"))
                                 input = "false";
                         case "true":
                         case "false":
                             Logger.toggle(Boolean.valueOf(input));
-                            message.updateMessage("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`");
+                            message.updateMessageAsync("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`", null);
                             break;
                         case "status":
-                            message.updateMessage("The logger is **" + (Logger.isEnabled() ? "enabled" : "disabled") + "**");
+                            message.updateMessageAsync("The logger is **" + (Logger.isEnabled() ? "enabled" : "disabled") + "**", null);
                             break;
                         default:
-                            message.updateMessage("`" + input + "` is not a valid option!");
+                            message.updateMessageAsync("`" + input + "` is not a valid option!", null);
                             break;
                     }
                 }
