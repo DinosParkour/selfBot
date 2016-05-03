@@ -45,7 +45,7 @@ public class EvalCommand extends ListenerAdapter {
         String prefix = BotInfo.getPrefix();
 
         if (!author.getId().equals(BotInfo.AUTHOR_ID)
-                || !msg.startsWith(prefix + "eval")
+                || !msg.toLowerCase().startsWith(prefix + "eval")
                 || !msg.contains(" ")) return;
 
         String input = msg.substring(msg.indexOf(' ') + 1);
