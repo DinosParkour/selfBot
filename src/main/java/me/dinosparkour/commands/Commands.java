@@ -35,13 +35,12 @@ public class Commands extends ListenerAdapter {
 
         switch (command.toLowerCase()) {
             case "apps":
-                message.updateMessageAsync("<https://discordapp.com/developers/applications/me>"
-                        + "\nMake sure you're logged in as yourself and not as your bot!", null);
+                message.updateMessageAsync("<https://discordapp.com/developers/applications/me>", null);
                 break;
 
             case "invite":
                 message.updateMessageAsync("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot"
-                        + "\n\nReplace `APP_ID` in that link with your bot's app id.", null);
+                        + "\n\nReplace `APP_ID` in that link with your bot's Client/Application ID.", null);
                 break;
 
             case "cleanup":
