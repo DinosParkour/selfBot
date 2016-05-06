@@ -54,8 +54,8 @@ public class Commands extends ListenerAdapter {
                                 .replace("*", "\\*")
                                 .replace("_", "\\_")
                                 .replace("~~", "\\~\\~")
-                                .replace("@everyone", "@\u180eeveryone"
-                                        .replace("@here", "@\u180ehere"))
+                                .replace("@everyone", "@\u180eeveryone")
+                                .replace("@here", "@\u180ehere")
                                 + "#" + u.getDiscriminator())
                         .forEach(cancers::add);
 
