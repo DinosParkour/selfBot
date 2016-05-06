@@ -58,7 +58,7 @@ public class Commands extends ListenerAdapter {
                     amount = Integer.valueOf(input) + 1;
                 }
 
-                new MessageHistory(e.getChannel()).retrieve(amount).parallelStream()
+                new MessageHistory(e.getChannel()).retrieve(amount).stream()
                         .filter(m -> m.getAuthor() == jda.getSelfInfo()).forEach(Message::deleteMessage);
                 break;
 
