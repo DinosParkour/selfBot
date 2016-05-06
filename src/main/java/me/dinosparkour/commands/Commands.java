@@ -62,6 +62,8 @@ public class Commands extends ListenerAdapter {
                 String result = "__Names that will make your eyes bleed:__\n";
                 if (cancers.size() > 35)
                     result += "**Too damn many!** - " + cancers.size() + " to be exact";
+                else if (cancers.size() == 0)
+                    result += "None! You're quite lucky to be in this guild.";
                 else
                     result += String.join("\n", cancers);
                 message.updateMessageAsync(result, null);
