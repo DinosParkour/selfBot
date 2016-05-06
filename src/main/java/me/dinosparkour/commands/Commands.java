@@ -73,11 +73,14 @@ public class Commands extends ListenerAdapter {
                 if (input == null) {
                     amount = 20;
                 } else {
-
                     if (!NumberUtils.isNumber(input)) {
                         message.updateMessageAsync("`" + input + "` is not a valid cleanup amount!", null);
                         return;
+                    } else if (input.length() >= 10) {
+                        message.updateMessageAsync("Please use a lower cleanup amount!", null);
+                        return;
                     }
+
                     amount = Integer.valueOf(input) + 1;
                 }
 
