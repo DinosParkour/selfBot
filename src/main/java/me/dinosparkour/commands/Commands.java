@@ -9,6 +9,8 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.util.HashSet;
+
 /**
  * @author Dinos
  * @since 19/03/2016
@@ -41,6 +43,28 @@ public class Commands extends ListenerAdapter {
             case "invite":
                 message.updateMessageAsync("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot"
                         + "\n\nReplace `APP_ID` in that link with your bot's Client/Application ID.", null);
+                break;
+
+            case "cancer":
+                HashSet<String> cancers = new HashSet<>();
+                e.getGuild().getUsers().stream()
+                        .filter(u -> u.getUsername().replaceAll("[\\x20-\\x7E]*[\\x20-\\x7E]", "").length()
+                                > (u.getUsername().length() / 2))
+                        .map(u -> u.getUsername().replace("`", "\\`")
+                                .replace("*", "\\*")
+                                .replace("_", "\\_")
+                                .replace("~~", "\\~\\~")
+                                .replace("@everyone", "@\u180eeveryone"
+                                        .replace("@here", "@\u180ehere"))
+                                + "#" + u.getDiscriminator())
+                        .forEach(cancers::add);
+
+                String result = "__Names that will make your eyes bleed:__\n";
+                if (cancers.size() > 35)
+                    result += "**Too damn many!** - " + cancers.size() + " to be exact";
+                else
+                    result += String.join("\n", cancers);
+                message.updateMessageAsync(result, null);
                 break;
 
             case "cleanup":
