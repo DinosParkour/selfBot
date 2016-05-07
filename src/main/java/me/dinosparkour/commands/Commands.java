@@ -40,6 +40,10 @@ public class Commands extends ListenerAdapter {
                 message.updateMessageAsync("<https://discordapp.com/developers/applications/me>", null);
                 break;
 
+            case "docs":
+                message.updateMessageAsync("<https://discordapp.com/developers/docs/intro>", null);
+                break;
+
             case "invite":
                 message.updateMessageAsync("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot"
                         + "\n\nReplace `APP_ID` in that link with your bot's Client/Application ID.", null);
