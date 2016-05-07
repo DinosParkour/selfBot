@@ -122,6 +122,10 @@ public class Commands extends ListenerAdapter {
                 message.updateMessageAsync("https://giphy.com/gifs/reaction-nope-oh-god-why-dqmpS64HsNvb2", null);
                 break;
 
+            case "ratelimits":
+                message.updateMessageAsync("http://i.imgur.com/P6bDtR9.gif", null);
+                break;
+
             case "eyes":
             case "eyesok":
                 message.updateMessageAsync("http://i.imgur.com/BGViXAJ.gif", null);
