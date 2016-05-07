@@ -122,6 +122,16 @@ public class Commands extends ListenerAdapter {
                 message.updateMessageAsync("https://giphy.com/gifs/reaction-nope-oh-god-why-dqmpS64HsNvb2", null);
                 break;
 
+            case "wtfdidusay":
+            case "navyseals":
+                message.updateMessageAsync("http://i.imgur.com/35m0LlK.gifv", null);
+                break;
+
+            case "eyes":
+            case "eyesok":
+                message.updateMessageAsync("http://i.imgur.com/BGViXAJ.gif", null);
+                break;
+
             case "prefix":
                 if (input != null) {
                     BotInfo.setPrefix(input);
