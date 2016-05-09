@@ -126,6 +126,11 @@ public class Commands extends ListenerAdapter {
                 message.updateMessageAsync("http://i.imgur.com/P6bDtR9.gif", null);
                 break;
 
+            case "itstime":
+            case "itstimetostop":
+                message.updateMessageAsync("http://i.imgur.com/ia3NQrv.png", null);
+                break;
+
             case "eyes":
             case "eyesok":
                 message.updateMessageAsync("http://i.imgur.com/BGViXAJ.gif", null);
