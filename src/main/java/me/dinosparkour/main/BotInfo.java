@@ -4,10 +4,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-/**
- * @author Dinos
- * @since 19/03/2016
- **/
 public class BotInfo {
 
     private static final JSONObject config = Configurator.getConfig();

@@ -14,10 +14,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.util.concurrent.*;
 
-/**
- * @author Dinos
- * @since 19/03/2016
- **/
 public class EvalCommand extends ListenerAdapter {
 
     private final ScheduledExecutorService eval = Executors.newScheduledThreadPool(1);

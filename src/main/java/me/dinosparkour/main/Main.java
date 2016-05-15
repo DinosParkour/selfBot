@@ -9,10 +9,6 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 
-/**
- * @author Dinos
- * @since 19/03/2016
- **/
 public class Main extends ListenerAdapter {
 
     public static void main(String[] args) throws LoginException, IOException, InterruptedException {

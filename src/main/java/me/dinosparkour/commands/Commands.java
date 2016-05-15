@@ -11,10 +11,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.HashSet;
 
-/**
- * @author Dinos
- * @since 19/03/2016
- **/
 public class Commands extends ListenerAdapter {
 
     @Override
