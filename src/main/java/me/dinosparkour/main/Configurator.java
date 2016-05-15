@@ -59,34 +59,26 @@ class Configurator {
     }
 
     static void write(ConfigKey key, String value) throws IOException {
+        JSONObject json = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
+
         switch (key) {
             case EMAIL:
-                Files.write(Paths.get(config.getPath()),
-                        new JSONObject()
-                                .put("email", value)
-                                .put("password", BotInfo.getPassword())
-                                .put("prefix", BotInfo.getPrefix())
-                                .toString(4).getBytes());
+                json.remove("email");
+                json.put("email", value);
                 break;
 
             case PASSWORD:
-                Files.write(Paths.get(config.getPath()),
-                        new JSONObject()
-                                .put("email", BotInfo.getEmail())
-                                .put("password", value)
-                                .put("prefix", BotInfo.getPrefix())
-                                .toString(4).getBytes());
+                json.remove("password");
+                json.put("password", value);
                 break;
 
             case PREFIX:
-                Files.write(Paths.get(config.getPath()),
-                        new JSONObject()
-                                .put("email", BotInfo.getEmail())
-                                .put("password", BotInfo.getPassword())
-                                .put("prefix", value)
-                                .toString(4).getBytes());
+                json.remove("prefix");
+                json.put("prefix", value);
                 break;
         }
+
+        Files.write(Paths.get(config.getPath()), json.toString(4).getBytes());
     }
 
     enum ConfigKey {EMAIL, PASSWORD, PREFIX}
