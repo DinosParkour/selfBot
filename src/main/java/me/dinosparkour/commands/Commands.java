@@ -151,32 +151,6 @@ public class Commands extends ListenerAdapter {
             case "lenny":
                 message.updateMessageAsync("( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)", null);
                 break;
-
-            case "logger":
-                if (input == null) {
-                    Logger.toggle(!Logger.isEnabled());
-                    message.updateMessageAsync("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`", null);
-                } else {
-                    switch (input.toLowerCase()) {
-                        case "enable":
-                            input = "true";
-                        case "disable":
-                            if (!input.equals("true"))
-                                input = "false";
-                        case "true":
-                        case "false":
-                            Logger.toggle(Boolean.valueOf(input));
-                            message.updateMessageAsync("`" + (Logger.isEnabled() ? "Enabled" : "Disabled") + " the logger`", null);
-                            break;
-                        case "status":
-                            message.updateMessageAsync("The logger is **" + (Logger.isEnabled() ? "enabled" : "disabled") + "**", null);
-                            break;
-                        default:
-                            message.updateMessageAsync("`" + input + "` is not a valid option!", null);
-                            break;
-                    }
-                }
-                break;
         }
     }
 }
