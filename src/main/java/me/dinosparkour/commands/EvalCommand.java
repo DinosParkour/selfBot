@@ -51,7 +51,7 @@ public class EvalCommand extends ListenerAdapter {
 
         String input = msg.substring(msg.indexOf(' ') + 1);
 
-        String inputS = "Input: ```\n" + input.replace("```", "\\`\\`\\`") + "```";
+        String inputS = "Input: ```js\n" + input.replace("```", "\\`\\`\\`") + "```";
 
         engine.put("e", e);
         engine.put("event", e);
