@@ -93,13 +93,13 @@ public class Commands extends ListenerAdapter {
             case "playing":
             case "game":
                 if (input == null)
-                    message.updateMessageAsync("Currently playing: `" + jda.getSelfInfo().getCurrentGame() + "`", null);
+                    message.updateMessageAsync("Currently playing: `" + jda.getSelfInfo().getCurrentGame().getName() + "`", null);
                 else if (input.equalsIgnoreCase("null")) {
                     jda.getAccountManager().setGame("");
                     message.updateMessageAsync("Stopped playing.", null);
                 } else {
                     jda.getAccountManager().setGame(input);
-                    message.updateMessageAsync("Now playing: `" + jda.getSelfInfo().getCurrentGame() + "`", null);
+                    message.updateMessageAsync("Now playing: `" + jda.getSelfInfo().getCurrentGame().getName() + "`", null);
                 }
                 break;
 
