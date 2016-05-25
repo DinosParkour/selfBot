@@ -3,6 +3,7 @@ package me.dinosparkour.commands;
 import me.dinosparkour.main.BotInfo;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.MessageHistory;
+import net.dv8tion.jda.entities.Game;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -92,9 +93,10 @@ public class Commands extends ListenerAdapter {
 
             case "playing":
             case "game":
-                if (input == null)
-                    message.updateMessageAsync("Currently playing: `" + jda.getSelfInfo().getCurrentGame().getName() + "`", null);
-                else if (input.equalsIgnoreCase("null")) {
+                if (input == null) {
+                    Game game = jda.getSelfInfo().getCurrentGame();
+                    message.updateMessageAsync("Currently playing: `" + (game != null ? game.getName() : null) + "`", null);
+                } else if (input.equalsIgnoreCase("null") || input.equalsIgnoreCase("reset")) {
                     jda.getAccountManager().setGame("");
                     message.updateMessageAsync("Stopped playing.", null);
                 } else {
