@@ -11,6 +11,7 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.HashSet;
+import java.util.Random;
 
 public class Commands extends ListenerAdapter {
 
@@ -130,8 +131,20 @@ public class Commands extends ListenerAdapter {
                 break;
 
             case "eyes":
+                message.updateMessageAsync("http://i.imgur.com/xpDT0p1.png", null);
+                break;
+
             case "eyesok":
                 message.updateMessageAsync("http://i.imgur.com/BGViXAJ.gif", null);
+                break;
+
+            case "block":
+                message.updateMessageAsync("http://i.imgur.com/gHXwboc.png", null);
+                break;
+
+            case "cringe":
+                message.updateMessageAsync((new Random().nextDouble() > 0.5
+                        ? "http://i.imgur.com/mM5wGEP.gif" : "http://i.imgur.com/ETaqR4U.gif"), null);
                 break;
 
             case "prefix":
