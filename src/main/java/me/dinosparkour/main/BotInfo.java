@@ -9,6 +9,7 @@ public class BotInfo {
     private static final JSONObject config = Configurator.getConfig();
     private static final String email = config.getString("email");
     private static final String password = config.getString("password");
+    private static final String key2fa = config.getString("key2fa");
     public static String AUTHOR_ID;
     private static String prefix = config.getString("prefix");
 
@@ -34,5 +35,9 @@ public class BotInfo {
         }
 
         prefix = s;
+    }
+
+    static String getKey2FA() {
+        return BotInfo.key2fa.replace(" ", "");
     }
 }

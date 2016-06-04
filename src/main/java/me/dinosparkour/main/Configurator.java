@@ -40,18 +40,19 @@ class Configurator {
                 new JSONObject()
                         .put("email", "")
                         .put("password", "")
-                        .put("prefix", "!")
+                        .put("prefix", "/")
+                        .put("key2fa", "")
                         .toString(4).getBytes());
     }
 
     private static JSONObject load() throws IOException {
         JSONObject object = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
 
-        if (object.has("email") && object.has("password") && object.has("prefix"))
+        if (object.has("email") && object.has("password") && object.has("prefix") && object.has("key2fa"))
             return object;
 
         Configurator.create();
-        System.err.println("The config file was missing a value! [Either email/password/prefix]");
+        System.err.println("The config file was missing a value!");
         System.out.println("Regenerating the file from scratch..");
         System.exit(1);
 
@@ -76,10 +77,15 @@ class Configurator {
                 json.remove("prefix");
                 json.put("prefix", value);
                 break;
+
+            case KEY2FA:
+                json.remove("key2fa");
+                json.put("key2fa", value);
+                break;
         }
 
         Files.write(Paths.get(config.getPath()), json.toString(4).getBytes());
     }
 
-    enum ConfigKey {EMAIL, PASSWORD, PREFIX}
+    enum ConfigKey {EMAIL, PASSWORD, PREFIX, KEY2FA}
 }

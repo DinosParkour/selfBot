@@ -8,8 +8,9 @@ repositories {
 }
 
 dependencies {
-    compile 'net.dv8tion:JDA:2.0.0_272'
-    compile 'net.dv8tion:JDA-Client:0.1.0_3'
+    compile 'net.dv8tion:JDA:2.0.0_281'
+    compile 'net.dv8tion:JDA-Client:0.1.0_4'
+    compile 'org.jboss.aerogear:aerogear-otp-java:1.0.0'
 }
 
 //noinspection GroovyUnusedAssignment
