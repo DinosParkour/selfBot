@@ -38,17 +38,19 @@ class Configurator {
     private static void create() throws IOException {
         Files.write(Paths.get(config.getPath()),
                 new JSONObject()
-                        .put("email", "")
-                        .put("password", "")
+//                        .put("email", "")
+//                        .put("password", "")
                         .put("prefix", "/")
-                        .put("key2fa", "")
+//                        .put("key2fa", "")
+                        .put("token", "")
                         .toString(4).getBytes());
     }
 
     private static JSONObject load() throws IOException {
         JSONObject object = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
 
-        if (object.has("email") && object.has("password") && object.has("prefix") && object.has("key2fa"))
+//        if (object.has("email") && object.has("password") && object.has("prefix") && object.has("key2fa"))
+        if (object.has("token") && object.has("prefix"))
             return object;
 
         Configurator.create();
@@ -63,29 +65,37 @@ class Configurator {
         JSONObject json = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
 
         switch (key) {
-            case EMAIL:
-                json.remove("email");
-                json.put("email", value);
-                break;
-
-            case PASSWORD:
-                json.remove("password");
-                json.put("password", value);
-                break;
+//            case EMAIL:
+//                json.remove("email");
+//                json.put("email", value);
+//                break;
+//
+//            case PASSWORD:
+//                json.remove("password");
+//                json.put("password", value);
+//                break;
 
             case PREFIX:
                 json.remove("prefix");
                 json.put("prefix", value);
                 break;
 
-            case KEY2FA:
-                json.remove("key2fa");
-                json.put("key2fa", value);
+//            case KEY2FA:
+//                json.remove("key2fa");
+//                json.put("key2fa", value);
+//                break;
+
+            case TOKEN:
+                json.remove("token");
+                json.put("token", value);
                 break;
         }
 
         Files.write(Paths.get(config.getPath()), json.toString(4).getBytes());
     }
 
-    enum ConfigKey {EMAIL, PASSWORD, PREFIX, KEY2FA}
+    //    enum ConfigKey {EMAIL, PASSWORD, PREFIX, KEY2FA}
+    enum ConfigKey {
+        TOKEN, PREFIX
+    }
 }
