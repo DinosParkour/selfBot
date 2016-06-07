@@ -19,6 +19,7 @@ public class Main extends ListenerAdapter {
                 .setClientToken(BotInfo.getToken())
                 .addListener(new Commands())
                 .addListener(new EvalCommand())
+                .setAudioEnabled(false)
                 .buildBlocking();
 
         jda.getAccountManager().setIdle(true);
