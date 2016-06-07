@@ -142,6 +142,14 @@ public class Commands extends ListenerAdapter {
                 message.updateMessageAsync("http://i.imgur.com/gHXwboc.png", null);
                 break;
 
+            case "leave":
+                message.updateMessageAsync("http://i.imgur.com/taMA1xX.png", null);
+                break;
+
+            case "triggered":
+                message.updateMessageAsync("http://i.imgur.com/Yug8HWJ.gif", null);
+                break;
+
             case "cringe":
                 message.updateMessageAsync((new Random().nextDouble() > 0.5
                         ? "http://i.imgur.com/mM5wGEP.gif" : "http://i.imgur.com/ETaqR4U.gif"), null);
