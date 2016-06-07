@@ -147,7 +147,8 @@ public class Commands extends ListenerAdapter {
                 break;
 
             case "triggered":
-                message.updateMessageAsync("http://i.imgur.com/Yug8HWJ.gif", null);
+                message.updateMessageAsync((new Random().nextDouble() > 0.5
+                        ? "http://i.imgur.com/Yug8HWJ.gif" : "http://i.imgur.com/XNgfclR.gif"), null);
                 break;
 
             case "cringe":
@@ -161,10 +162,6 @@ public class Commands extends ListenerAdapter {
                     message.updateMessageAsync("New Prefix `" + input + "`", null);
                 } else
                     message.updateMessageAsync("Current Prefix `" + prefix + "`", null);
-                break;
-
-            case "shrug":
-                message.updateMessageAsync("\u00af\\_(\u30c4)_/\u00af", null);
                 break;
 
             case "lenny":
