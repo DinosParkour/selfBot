@@ -4,14 +4,12 @@ import me.dinosparkour.commands.Commands;
 import me.dinosparkour.commands.EvalCommand;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.client.JDAClientBuilder;
-import net.dv8tion.jda.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
-import java.io.IOException;
 
-public class Main extends ListenerAdapter {
+public class Main {
 
-    public static void main(String[] args) throws LoginException, IOException, InterruptedException {
+    public static void main(String[] args) throws LoginException, InterruptedException {
         JDA jda = new JDAClientBuilder()
 //                .setEmail(BotInfo.getEmail())
 //                .setPassword(BotInfo.getPassword())
