@@ -70,7 +70,5 @@ class Configurator {
     }
 
     //    enum ConfigKey {EMAIL, PASSWORD, PREFIX, KEY2FA}
-    enum ConfigKey {
-        TOKEN, PREFIX
-    }
+    enum ConfigKey {TOKEN, PREFIX}
 }
