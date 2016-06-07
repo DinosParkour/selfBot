@@ -63,34 +63,9 @@ class Configurator {
 
     static void write(ConfigKey key, String value) throws IOException {
         JSONObject json = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
-
-        switch (key) {
-//            case EMAIL:
-//                json.remove("email");
-//                json.put("email", value);
-//                break;
-//
-//            case PASSWORD:
-//                json.remove("password");
-//                json.put("password", value);
-//                break;
-
-            case PREFIX:
-                json.remove("prefix");
-                json.put("prefix", value);
-                break;
-
-//            case KEY2FA:
-//                json.remove("key2fa");
-//                json.put("key2fa", value);
-//                break;
-
-            case TOKEN:
-                json.remove("token");
-                json.put("token", value);
-                break;
-        }
-
+        String keyName = key.name().toLowerCase();
+        json.remove(keyName);
+        json.put(keyName, value);
         Files.write(Paths.get(config.getPath()), json.toString(4).getBytes());
     }
 
