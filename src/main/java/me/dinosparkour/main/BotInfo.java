@@ -7,7 +7,7 @@ import java.io.IOException;
 public class BotInfo {
 
     private static final JSONObject config = Configurator.getConfig();
-    //    private static final String email = config.getString("email");
+//    private static final String email = config.getString("email");
 //    private static final String password = config.getString("password");
 //    private static final String key2fa = config.getString("key2fa");
     private static final String token = config.getString("token");
