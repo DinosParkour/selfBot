@@ -1,171 +1,125 @@
 package me.dinosparkour.commands;
 
-import me.dinosparkour.main.BotInfo;
-import net.dv8tion.jda.JDA;
-import net.dv8tion.jda.MessageHistory;
-import net.dv8tion.jda.entities.Game;
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.hooks.ListenerAdapter;
-import org.apache.commons.lang3.math.NumberUtils;
+import me.dinosparkour.Info;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-import java.util.HashSet;
 import java.util.Random;
 
 public class Commands extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
-        JDA jda = e.getJDA();
-        User author = e.getAuthor();
         Message message = e.getMessage();
         String msg = message.getContent();
 
-        String prefix = BotInfo.getPrefix();
+        if (!e.getAuthor().getId().equals(Info.AUTHOR_ID)
+                || !msg.startsWith(Info.PREFIX)) return;
 
-        if (!author.getId().equals(BotInfo.AUTHOR_ID)
-                || !msg.startsWith(prefix)) return;
-
-        String[] args = msg.split("\\s+");
-        String command = args[0].substring(prefix.length());
-        String input = null;
+        String command = msg.substring(Info.PREFIX.length());
         if (msg.contains(" "))
-            input = msg.substring(msg.indexOf(' ') + 1);
+            command = command.substring(command.indexOf(' '));
+        command = command.toLowerCase();
+        String input = msg.substring(command.length()).trim();
 
         switch (command.toLowerCase()) {
             case "apps":
-                message.updateMessageAsync("<https://discordapp.com/developers/applications/me>", null);
+                message.editMessage("<https://discordapp.com/developers/applications/me>").queue();
                 break;
 
             case "docs":
-                message.updateMessageAsync("<https://discordapp.com/developers/docs/intro>", null);
+                message.editMessage("<https://discordapp.com/developers/docs/intro>").queue();
                 break;
 
             case "invite":
-                message.updateMessageAsync("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot"
-                        + "\n\nReplace `APP_ID` in that link with your bot's Client/Application ID.", null);
-                break;
-
-            case "cancer":
-                HashSet<String> cancers = new HashSet<>();
-                e.getGuild().getUsers().stream()
-                        .filter(u -> u.getUsername().replaceAll("[\\x20-\\x7E]*[\\x20-\\x7E]", "").length()
-                                > (u.getUsername().length() / 2))
-                        .map(u -> u.getUsername().replace("`", "\\`")
-                                .replace("*", "\\*")
-                                .replace("_", "\\_")
-                                .replace("~~", "\\~\\~")
-                                .replace("@everyone", "@\u180eeveryone")
-                                .replace("@here", "@\u180ehere")
-                                + "#" + u.getDiscriminator())
-                        .forEach(cancers::add);
-
-                String result = "__Names that will make your eyes bleed:__\n";
-                if (cancers.size() > 35)
-                    result += "**Too damn many!** - " + cancers.size() + " to be exact";
-                else if (cancers.size() == 0)
-                    result += "None! You're quite lucky to be in this guild.";
-                else
-                    result += String.join("\n", cancers);
-                message.updateMessageAsync(result, null);
+                message.editMessage("https://discordapp.com/oauth2/authorize?client_id=APP_ID&scope=bot"
+                        + "\n\nReplace `APP_ID` in that link with your bot's Client/Application ID.").queue();
                 break;
 
             case "cleanup":
                 int amount;
-
-                if (input == null) {
-                    amount = 20;
-                } else {
-                    if (!NumberUtils.isNumber(input)) {
-                        message.updateMessageAsync("`" + input + "` is not a valid cleanup amount!", null);
-                        return;
-                    } else if (input.length() >= 10) {
-                        message.updateMessageAsync("Please use a lower cleanup amount!", null);
-                        return;
-                    }
-
-                    amount = Integer.valueOf(input) + 1;
+                try {
+                    amount = input.isEmpty() ? 20 : Integer.valueOf(input) + 1;
+                    if (amount <= 1) throw new NumberFormatException();
+                } catch (NumberFormatException ex) {
+                    message.editMessage("*That's not a valid amount!").queue();
+                    return;
                 }
 
-                new MessageHistory(e.getChannel()).retrieve(amount).stream()
-                        .filter(m -> m.getAuthor() == jda.getSelfInfo()).forEach(Message::deleteMessage);
+                e.getChannel().getHistory().retrieve(amount).stream()
+                        .filter(m -> m.getAuthor().equals(e.getAuthor()))
+                        .forEach(Message::deleteMessage);
                 break;
 
+            /* TODO: Work on this once the implementation is actually present
             case "playing":
             case "game":
-                if (input == null) {
-                    Game game = jda.getSelfInfo().getCurrentGame();
-                    message.updateMessageAsync("Currently playing: `" + (game != null ? game.getName() : null) + "`", null);
+                Game game = e.getMember().getGame(); // This throws a NPE if it's a private message
+                if (input.isEmpty()) {
+                    message.editMessage("Currently playing: `" + game.getName() + "`").queue();
                 } else if (input.equalsIgnoreCase("null") || input.equalsIgnoreCase("reset")) {
                     jda.getAccountManager().setGame("");
-                    message.updateMessageAsync("Stopped playing.", null);
+                    message.editMessage("Stopped playing.").queue();
                 } else {
                     jda.getAccountManager().setGame(input);
-                    message.updateMessageAsync("Now playing: `" + jda.getSelfInfo().getCurrentGame().getName() + "`", null);
+                    message.editMessage("Now playing: `" + game.getName() + "`").queue();
                 }
                 break;
+            */
 
             case "meme":
             case "nicememe":
-                message.updateMessageAsync("http://i.giphy.com/315b275sfehgs.gif", null);
+                message.editMessage("http://i.giphy.com/315b275sfehgs.gif").queue();
                 break;
 
             case "out":
             case "imout":
-                message.updateMessageAsync("http://i.imgur.com/KBNcZ.gif", null);
+                message.editMessage("http://i.imgur.com/KBNcZ.gif").queue();
                 break;
 
             case "nope":
             case "ohgodwhy":
-                message.updateMessageAsync("https://giphy.com/gifs/reaction-nope-oh-god-why-dqmpS64HsNvb2", null);
+                message.editMessage("https://giphy.com/gifs/reaction-nope-oh-god-why-dqmpS64HsNvb2").queue();
                 break;
 
             case "ratelimits":
-                message.updateMessageAsync("http://i.imgur.com/P6bDtR9.gif", null);
+                message.editMessage("http://i.imgur.com/P6bDtR9.gif").queue();
                 break;
 
             case "itstime":
             case "itstimetostop":
-                message.updateMessageAsync("http://i.imgur.com/ia3NQrv.png", null);
+                message.editMessage("http://i.imgur.com/ia3NQrv.png").queue();
                 break;
 
             case "eyes":
-                message.updateMessageAsync("http://i.imgur.com/xpDT0p1.png", null);
+                message.editMessage("http://i.imgur.com/xpDT0p1.png").queue();
                 break;
 
             case "eyesok":
-                message.updateMessageAsync("http://i.imgur.com/BGViXAJ.gif", null);
+                message.editMessage("http://i.imgur.com/BGViXAJ.gif").queue();
                 break;
 
             case "block":
-                message.updateMessageAsync("http://i.imgur.com/gHXwboc.png", null);
+                message.editMessage("http://i.imgur.com/gHXwboc.png").queue();
                 break;
 
             case "leave":
-                message.updateMessageAsync("http://i.imgur.com/taMA1xX.png", null);
+                message.editMessage("https://i.imgur.com/24kgkMx.png").queue();
                 break;
 
             case "triggered":
-                message.updateMessageAsync((new Random().nextDouble() > 0.5
-                        ? "http://i.imgur.com/Yug8HWJ.gif" : "http://i.imgur.com/XNgfclR.gif"), null);
+                message.editMessage((new Random().nextDouble() > 0.5
+                        ? "http://i.imgur.com/Yug8HWJ.gif" : "http://i.imgur.com/XNgfclR.gif")).queue();
                 break;
 
             case "cringe":
-                message.updateMessageAsync((new Random().nextDouble() > 0.5
-                        ? "http://i.imgur.com/mM5wGEP.gif" : "http://i.imgur.com/ETaqR4U.gif"), null);
-                break;
-
-            case "prefix":
-                if (input != null) {
-                    BotInfo.setPrefix(input);
-                    message.updateMessageAsync("New Prefix `" + input + "`", null);
-                } else
-                    message.updateMessageAsync("Current Prefix `" + prefix + "`", null);
+                message.editMessage((new Random().nextDouble() > 0.5
+                        ? "http://i.imgur.com/mM5wGEP.gif" : "http://i.imgur.com/ETaqR4U.gif")).queue();
                 break;
 
             case "lenny":
-                message.updateMessageAsync("( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)", null);
+                message.editMessage("( ͡° ͜ʖ ͡°)").queue();
                 break;
         }
     }

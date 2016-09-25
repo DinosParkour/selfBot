@@ -4,15 +4,15 @@ plugins {
 }
 
 repositories {
-    jcenter()
+//    jcenter()
 }
 
 dependencies {
-    compile 'net.dv8tion:JDA:2.1.0_293'
-    compile 'net.dv8tion:JDA-Client:0.2.0_8'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile 'org.jboss.aerogear:aerogear-otp-java:1.0.0'
 }
 
 //noinspection GroovyUnusedAssignment
-mainClassName = 'me.dinosparkour.main.Main'
+mainClassName = 'me.dinosparkour.Main'
 compileJava.options.encoding = 'UTF-8'
+shadowJar.archiveName = 'selfBot.jar'
