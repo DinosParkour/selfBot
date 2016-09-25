@@ -121,6 +121,10 @@ public class Commands extends ListenerAdapter {
             case "lenny":
                 message.editMessage("( ͡° ͜ʖ ͡°)").queue();
                 break;
+
+            case "uptime":
+                message.editMessage("**Uptime:** `" + Info.getUptime() + "`").queue();
+                break;
         }
     }
 }
