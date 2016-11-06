@@ -19,14 +19,8 @@ class Config {
             System.exit(0);
         }
 
-        JSONObject object = null;
-        try {
-            object = new JSONObject(new String(Files.readAllBytes(Paths.get(configFile.getPath())), "UTF-8"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        if (object != null && object.has("token"))
+        JSONObject object = read(configFile);
+        if (object.has("token"))
             configObject = object;
         else {
             create(); // If the token value is missing, regenerate the config file.
@@ -45,5 +39,15 @@ class Config {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private JSONObject read(File file) {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(new String(Files.readAllBytes(Paths.get(file.getPath())), "UTF-8"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return obj;
     }
 }

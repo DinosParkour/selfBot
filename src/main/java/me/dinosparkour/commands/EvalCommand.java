@@ -1,16 +1,18 @@
 package me.dinosparkour.commands;
 
-import me.dinosparkour.Info;
+import me.dinosparkour.commands.impls.CommandImpl;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.util.Arrays;
+import java.util.List;
 
-public class EvalCommand extends ListenerAdapter {
+public class EvalCommand extends CommandImpl {
 
     private final ScriptEngine engine;
+
     public EvalCommand() {
         engine = new ScriptEngineManager().getEngineByName("nashorn");
         try {
@@ -21,21 +23,13 @@ public class EvalCommand extends ListenerAdapter {
     }
 
     @Override
-    public void onMessageReceived(MessageReceivedEvent e) {
-        String msg = e.getMessage().getRawContent();
-        if (!e.getAuthor().getId().equals(Info.AUTHOR_ID)
-                || !msg.toLowerCase().startsWith(Info.PREFIX + "eval")
-                || !msg.contains(" ")) return;
-        String allArgs = msg.substring(msg.indexOf(' ')).trim();
-        String inputS = "Input: ```js\n" + allArgs.replace("`", "\\`") + "```\n";
-
+    public void execute(String[] args, MessageReceivedEvent e, MessageSender chat) {
+        String allArgs = String.join(" ", Arrays.asList(args));
         engine.put("e", e);
         engine.put("event", e);
-        engine.put("API", e.getJDA()); // .. because my phone autocorrects to all caps, :P
         engine.put("api", e.getJDA());
         engine.put("jda", e.getJDA());
-        engine.put("channel", e.isPrivate() ? e.getPrivateChannel() : e.getTextChannel());
-        engine.put("self", e.getAuthor());
+        engine.put("channel", e.getChannel());
         engine.put("author", e.getAuthor());
         engine.put("message", e.getMessage());
         engine.put("guild", e.getGuild());
@@ -44,23 +38,25 @@ public class EvalCommand extends ListenerAdapter {
         engine.put("mentionedRoles", e.getMessage().getMentionedRoles());
         engine.put("mentionedChannels", e.getMessage().getMentionedChannels());
 
+        String outputS = "Input: ```js\n" + allArgs.replace("`", "`\u180e") + "```\n";
         Object out;
         try {
             out = engine.eval("(function() { with (imports) {\n" + allArgs + "\n} })();");
         } catch (Exception ex) {
-            e.getMessage().editMessage(inputS + "**Exception**: ```\n" + ex.getLocalizedMessage() + "```").queue();
+            chat.update(outputS + "**Exception**: ```\n" + ex.getLocalizedMessage() + "```");
             return;
         }
 
-        String outputS = inputS;
         if (out == null)
             outputS += "`Task executed without errors.`";
         else
-            outputS += "Output: ```\n" + out.toString().replace("`", "\\`") + "```";
+            outputS += "Output: ```\n" + out.toString().replace("`", "`\u180e") + "\n```";
 
-        if (outputS.length() >= 2000)
-            outputS += "The output is too long!";
+        chat.update(outputS);
+    }
 
-        e.getMessage().editMessage(outputS.replace("@", "@\u180e")).queue();
+    @Override
+    public List<String> getAlias() {
+        return Arrays.asList("eval", "evaluate", "exec", "execute");
     }
 }

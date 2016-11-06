@@ -13,6 +13,6 @@ dependencies {
 }
 
 //noinspection GroovyUnusedAssignment
-mainClassName = 'me.dinosparkour.Main'
+mainClassName = 'me.dinosparkour.Bot'
 compileJava.options.encoding = 'UTF-8'
 shadowJar.archiveName = 'selfBot.jar'
